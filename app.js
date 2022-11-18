@@ -5,7 +5,8 @@
 function getList() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      let potentialFail = Math.round(Math.random() * 100) < 10;
+      let potentialFail = true;
+      // let potentialFail = Math.round(Math.random() * 100) < 10;
       if (potentialFail) {
         reject({ success: false, message: "Failed to get list of hobbits." });
       } else {
@@ -15,7 +16,28 @@ function getList() {
   });
 }
 
+
+const err = document.getElementById("error");
+const list = document.getElementById("list");
 // TODO: Handle the resolved or rejected states of the promise
+
+
+
+
+getList().then((result) => {
+  for (hobbit of result) {
+    let hobbitListUl = document.getElementById("list");
+    let listItem = document.createElement("li");
+    listItem.textContent = hobbit;
+    hobbitListUl.appendChild(listItem);
+  };
+  console.log(result);
+}).catch((error) => {
+  document.getElementById("error").textContent = `${error.message}`;
+  console.log(error);
+  })
+
+
 
 // TODO: If the promise resolves with the list of hobbits
 // Render the list of hobbits as list items within the unordered list with id="list" (check the index.html file)
